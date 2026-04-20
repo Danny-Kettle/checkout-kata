@@ -95,5 +95,13 @@ public class CheckoutTests
         Assert.Equal(95, total);
     }
 
+
+    [Fact]
+    public void Scan_InvalidItem_ThrowsCheckoutException()
+    {
+        var checkout = new Checkout(new List<PricingRule>());
+
+        Assert.Throws<CheckoutException>(() => checkout.Scan("Z"));
+    }
     
 }
