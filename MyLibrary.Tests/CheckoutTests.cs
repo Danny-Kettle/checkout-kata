@@ -4,10 +4,17 @@ using MyLibrary;
 
 public class CheckoutTests
 {
+    private List<PricingRule> GetDefaultRules() => new()
+    {
+        new PricingRule { SKU = "A", UnitPrice = 50, OfferQuantity = 3, OfferPrice = 130 },
+        new PricingRule { SKU = "B", UnitPrice = 30, OfferQuantity = 2, OfferPrice = 45 },
+        new PricingRule { SKU = "C", UnitPrice = 20 },
+    };
+
     [Fact]
     public void GetTotalPrice_ReturnsZero_IfNoItemScanned()
     {
-        var checkout = new Checkout(new List<PricingRule>());
+        var checkout = new Checkout(GetDefaultRules());
 
         var totalPrice = checkout.GetTotalPrice();
 
@@ -17,12 +24,7 @@ public class CheckoutTests
     [Fact]
     public void GetTotalPrice_SingleItem_ReturnsCorrectPrice()
     {
-        var rules = new List<PricingRule>
-        {
-            new PricingRule { SKU = "A", UnitPrice = 50 }
-        };
-
-        var checkout = new Checkout(rules);
+        var checkout = new Checkout(GetDefaultRules());
 
         checkout.Scan("A");
 
@@ -34,13 +36,7 @@ public class CheckoutTests
     [Fact]
     public void GetTotalPrice_MultipleItems_ReturnsCorrectPrice()
     {
-        var rules = new List<PricingRule>
-        {
-            new PricingRule { SKU = "A", UnitPrice = 50 },
-            new PricingRule { SKU = "B", UnitPrice = 30 }
-        };
-
-        var checkout = new Checkout(rules);
+        var checkout = new Checkout(GetDefaultRules());
 
         checkout.Scan("A");
         checkout.Scan("B");
@@ -53,12 +49,8 @@ public class CheckoutTests
     [Fact]
     public void GetTotalPrice_ThreeAs_UsesSpecialPrice()
     {
-        var rules = new List<PricingRule>
-        {
-            new PricingRule { SKU = "A", UnitPrice = 50, OfferQuantity = 3, OfferPrice = 130 }
-        };
 
-        var checkout = new Checkout(rules);
+        var checkout = new Checkout(GetDefaultRules());
 
         checkout.Scan("A");
         checkout.Scan("A");
@@ -72,14 +64,7 @@ public class CheckoutTests
     [Fact]
     public void GetTotalPrice_MixedBasket_AppliesAllOffersCorrectly()
     {
-        var rules = new List<PricingRule>
-        {
-            new PricingRule { SKU = "A", UnitPrice = 50, OfferQuantity = 3, OfferPrice = 130 },
-            new PricingRule { SKU = "B", UnitPrice = 30, OfferQuantity = 2, OfferPrice = 45 },
-            new PricingRule { SKU = "C", UnitPrice = 20 }
-        };
-
-        var checkout = new Checkout(rules);
+        var checkout = new Checkout(GetDefaultRules());
 
         checkout.Scan("A");
         checkout.Scan("A");
@@ -98,13 +83,7 @@ public class CheckoutTests
     [Fact]
     public void GetTotalPrice_ExampleScenario_ReturnsCorrectPrice()
     {
-        var rules = new List<PricingRule>
-        {
-            new PricingRule { SKU = "A", UnitPrice = 50, OfferQuantity = 3, OfferPrice = 130 },
-            new PricingRule { SKU = "B", UnitPrice = 30, OfferQuantity = 2, OfferPrice = 45 },
-            new PricingRule { SKU = "C", UnitPrice = 20 }
-        };
-        var checkout = new Checkout(rules);
+        var checkout = new Checkout(GetDefaultRules());
 
         checkout.Scan("A"); 
 
