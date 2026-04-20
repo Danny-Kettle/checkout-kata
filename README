@@ -1,0 +1,78 @@
+# Checkout Kata
+I deliberately kept things simple and avoided adding extra layers like repositories or services.
+
+For a problem this small, that would just add noise without much benefit.
+
+## Overview
+
+This is a simple checkout system that calculates the total price of a basket of items using SKU-based pricing.
+
+It supports:
+- Scanning items in any order
+- Basic unit pricing per SKU
+- Multi-buy offers (e.g. 3 for 130)
+- Pricing rules that can be passed in when the checkout is created
+- Basic validation for invalid input
+
+The main goal of this solution was to keep things simple, readable, and built step-by-step using tests.
+
+---
+
+## Pricing Rules Example
+
+| SKU | Unit Price | Special Offer |
+|-----|------------|---------------|
+| A   | 50         | 3 for 130     |
+| B   | 30         | 2 for 45      |
+| C   | 20         | None          |
+| D   | 15         | None          |
+
+---
+
+## Approach
+
+I built this using **TDD (Test Driven Development)**, starting with the simplest case and gradually adding more behaviour.
+
+The order went roughly like this:
+- Empty basket
+- Single item pricing
+- Multiple items
+- Handling duplicates
+- Adding multi-buy offers
+- Mixed baskets with different rules
+
+Each step was driven by tests, then refactored once it worked.
+
+---
+
+## Design decisions
+
+I tried to keep the design as simple as possible.
+
+- `Checkout` handles scanning items and calculating the total
+- `PricingRule` holds the price for each SKU and any special offer
+- Pricing rules are passed into the checkout so the pricing can change without touching the checkout logic
+- Items are grouped by SKU when calculating the total to make applying offers easier
+
+### Why grouping?
+
+Grouping items by SKU made the offer logic much easier to reason about. Instead of dealing with items one by one, we can just look at quantities per SKU.
+
+---
+
+## Error handling
+
+I added some basic validation to keep things safe:
+
+- Scanning a null or empty item throws an exception
+- Scanning an unknown SKU throws an exception
+
+This is mainly to fail fast and avoid calculating with invalid data.
+
+
+---
+
+## Running tests
+
+```bash
+dotnet test
