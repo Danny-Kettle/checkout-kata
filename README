@@ -1,5 +1,5 @@
 # Checkout Kata
-I deliberately kept things simple and avoided adding extra layers like repositories or services.
+I deliberately kept things simple and avoided adding extra layers like repositories or services and even no .sln file.
 
 For a problem this small, that would just add noise without much benefit.
 
@@ -75,4 +75,6 @@ This is mainly to fail fast and avoid calculating with invalid data.
 ## Running tests
 
 ```bash
+cd ./MyLibrary.Tests
+
 dotnet test
