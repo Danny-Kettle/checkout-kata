@@ -1,4 +1,4 @@
-namespace MyLibrary;
+namespace CheckoutKata.Lib;
 
 /// <summary>
 /// Represents a checkout basket that allows items to be scanned

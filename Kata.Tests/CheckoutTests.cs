@@ -1,6 +1,6 @@
-namespace MyLibrary.Tests;
+namespace CheckoutKata.Tests;
 
-using MyLibrary;
+using CheckoutKata.Lib;
 
 public class CheckoutTests
 {

@@ -1,4 +1,4 @@
-﻿namespace MyLibrary;
+﻿namespace CheckoutKata.Lib;
 
 /// <summary>
 /// Represents a checkout system that allows scanning items and calculating a total price

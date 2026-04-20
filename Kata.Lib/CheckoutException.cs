@@ -1,4 +1,4 @@
-namespace MyLibrary;
+namespace CheckoutKata.Lib;
 
 public class CheckoutException : Exception
 {

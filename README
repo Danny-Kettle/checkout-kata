@@ -75,6 +75,6 @@ This is mainly to fail fast and avoid calculating with invalid data.
 ## Running tests
 
 ```bash
-cd ./MyLibrary.Tests
+cd ./Kata.Tests
 
 dotnet test

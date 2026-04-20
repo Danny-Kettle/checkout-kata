@@ -1,4 +1,4 @@
-namespace MyLibrary;
+namespace CheckoutKata.Lib;
 
 /// <summary>
 /// Represents pricing information for a SKU, including unit price

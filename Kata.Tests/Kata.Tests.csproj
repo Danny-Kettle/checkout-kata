@@ -22,7 +22,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\MyLibrary\MyLibrary.csproj" />
+    <ProjectReference Include="..\Kata.Lib\Kata.Lib.csproj" />
   </ItemGroup>
 
 </Project>
