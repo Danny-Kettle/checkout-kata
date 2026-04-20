@@ -30,4 +30,23 @@ public class CheckoutTests
 
         Assert.Equal(50, totalPrice);
     }
+
+    [Fact]
+    public void GetTotalPrice_MultipleItems_ReturnsCorrectPrice()
+    {
+        var rules = new List<PricingRule>
+        {
+            new PricingRule { SKU = "A", UnitPrice = 50 },
+            new PricingRule { SKU = "B", UnitPrice = 30 }
+        };
+
+        var checkout = new Checkout(rules);
+
+        checkout.Scan("A");
+        checkout.Scan("B");
+
+        var totalPrice = checkout.GetTotalPrice();
+
+        Assert.Equal(80, totalPrice);
+    }
 }
