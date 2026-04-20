@@ -68,4 +68,53 @@ public class CheckoutTests
 
         Assert.Equal(130, total);
     }
+
+    [Fact]
+    public void GetTotalPrice_MixedBasket_AppliesAllOffersCorrectly()
+    {
+        var rules = new List<PricingRule>
+        {
+            new PricingRule { SKU = "A", UnitPrice = 50, OfferQuantity = 3, OfferPrice = 130 },
+            new PricingRule { SKU = "B", UnitPrice = 30, OfferQuantity = 2, OfferPrice = 45 },
+            new PricingRule { SKU = "C", UnitPrice = 20 }
+        };
+
+        var checkout = new Checkout(rules);
+
+        checkout.Scan("A");
+        checkout.Scan("A");
+        checkout.Scan("A"); 
+
+        checkout.Scan("B");
+        checkout.Scan("B"); 
+
+        checkout.Scan("C");
+
+        var total = checkout.GetTotalPrice();
+
+        Assert.Equal(195, total);
+    }
+
+    [Fact]
+    public void GetTotalPrice_ExampleScenario_ReturnsCorrectPrice()
+    {
+        var rules = new List<PricingRule>
+        {
+            new PricingRule { SKU = "A", UnitPrice = 50, OfferQuantity = 3, OfferPrice = 130 },
+            new PricingRule { SKU = "B", UnitPrice = 30, OfferQuantity = 2, OfferPrice = 45 },
+            new PricingRule { SKU = "C", UnitPrice = 20 }
+        };
+        var checkout = new Checkout(rules);
+
+        checkout.Scan("A"); 
+
+        checkout.Scan("B");
+        checkout.Scan("B"); 
+
+        var total = checkout.GetTotalPrice();
+
+        Assert.Equal(95, total);
+    }
+
+    
 }
