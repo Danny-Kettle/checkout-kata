@@ -49,4 +49,23 @@ public class CheckoutTests
 
         Assert.Equal(80, totalPrice);
     }
+
+    [Fact]
+    public void GetTotalPrice_ThreeAs_UsesSpecialPrice()
+    {
+        var rules = new List<PricingRule>
+        {
+            new PricingRule { SKU = "A", UnitPrice = 50, OfferQuantity = 3, OfferPrice = 130 }
+        };
+
+        var checkout = new Checkout(rules);
+
+        checkout.Scan("A");
+        checkout.Scan("A");
+        checkout.Scan("A");
+
+        var total = checkout.GetTotalPrice();
+
+        Assert.Equal(130, total);
+    }
 }

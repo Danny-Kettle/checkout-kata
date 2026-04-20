@@ -20,9 +20,29 @@ public class Checkout : ICheckout
     {
         int totalPrice = 0;
 
-        foreach (var item in _items)
+        var groupedItems = _items.GroupBy(i=> i); // Grouped items to calculate offers
+
+        foreach (var group in groupedItems)
         {
-            totalPrice += _rules[item].UnitPrice;
+            var sku = group.Key;
+            var quantity = group.Count();
+            var rule = _rules[sku];
+
+            //Checks if there is an offer for the item 
+            if (rule.OfferQuantity.HasValue && rule.OfferPrice.HasValue)
+            {
+                int offerCount = quantity / rule.OfferQuantity.Value; 
+
+                // Needs this to calculate the remaining items that do not fit 
+                int remainingCount = quantity % rule.OfferQuantity.Value;
+
+                totalPrice += offerCount * rule.OfferPrice.Value + remainingCount * rule.UnitPrice;
+            }
+            else
+            {
+                totalPrice += quantity * rule.UnitPrice;
+            }
+        
         }
 
         return totalPrice;
