@@ -6,7 +6,7 @@ namespace CheckoutKata.Lib;
 /// </summary>
 public class Checkout : ICheckout
 {
-    private readonly List<string> _items = new();
+    private readonly Dictionary<string, int> _items = new();
     private readonly Dictionary<string, PricingRule> _rules;
 
     /// <summary>
@@ -30,7 +30,7 @@ public class Checkout : ICheckout
         if (!_rules.ContainsKey(item))
             throw new CheckoutException($"Unknown SKU: {item}");
 
-        _items.Add(item);
+        _items[item] = _items.GetValueOrDefault(item) + 1;
     }
 
     /// <summary>
@@ -40,8 +40,6 @@ public class Checkout : ICheckout
     /// <returns>The total price of the basket.</returns>
     public int GetTotalPrice()
     {
-        return _items
-            .GroupBy(i => i)
-            .Sum(g => _rules[g.Key].Calculate(g.Count()));
+        return _items.Sum(scannedItem => _rules[scannedItem.Key].Calculate(scannedItem.Value));
     }
 }
