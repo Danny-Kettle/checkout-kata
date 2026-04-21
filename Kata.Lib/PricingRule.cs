@@ -25,4 +25,21 @@ public class PricingRule
     /// The total price for the special offer quantity (if any).
     /// </summary>
     public int? OfferPrice { get; set; }
+
+    /// <summary>
+    /// Calculates the total price for a given quantity of items based on the pricing rule.
+    /// </summary>
+    /// <param name="quantity"></param>
+    /// <returns>total price for the given quantity</returns>
+    public int Calculate(int quantity)
+    {
+        if (OfferQuantity.HasValue && OfferPrice.HasValue)
+        {
+            int offerCount = quantity / OfferQuantity.Value;
+            int remainingCount = quantity % OfferQuantity.Value;
+            return offerCount * OfferPrice.Value + remainingCount * UnitPrice;
+        }
+
+        return quantity * UnitPrice;
+    }
 }
