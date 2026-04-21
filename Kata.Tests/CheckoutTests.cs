@@ -4,12 +4,13 @@ using CheckoutKata.Lib;
 
 public class CheckoutTests
 {
-    private List<PricingRule> GetDefaultRules() => new()
-    {
-        new PricingRule { SKU = "A", UnitPrice = 50, OfferQuantity = 3, OfferPrice = 130 },
-        new PricingRule { SKU = "B", UnitPrice = 30, OfferQuantity = 2, OfferPrice = 45 },
-        new PricingRule { SKU = "C", UnitPrice = 20 },
-    };
+        private List<PricingRule> GetDefaultRules() => new()
+        {
+            new PricingRule("A", 50, offerQuantity: 3, offerPrice: 130),
+            new PricingRule("B", 30, offerQuantity: 2, offerPrice: 45),
+            new PricingRule("C", 20),
+            new PricingRule("D", 15),
+        };
 
     [Fact]
     public void GetTotalPrice_ReturnsZero_IfNoItemScanned()
